@@ -21,6 +21,13 @@
                                 <h6>@line.Pie.ShortDescription</h6>
                                 <h2>@line.Pie.Price.ToString("c")</h2>
                             </div>
+                            <div class="d-flex justify-content-end">
+                                <a asp-action="RemoveFromShoppingCart"
+                                   asp-route-pieId="@line.Pie.PieId"
+                                   class="btn btn-outline-danger btn-sm">
+                                    Remove
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

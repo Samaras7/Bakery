@@ -1,0 +1,78 @@
+﻿@model PieFormViewModel
+@{
+    var formAction = ViewData["FormAction"]?.ToString() ?? "Create";
+}
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="@formAction" method="post">
+            <input type="hidden" name="returnCategory" value="@Model.ReturnCategory" />
+            <div class="alert alert-info" role="alert">
+                Fields marked with <span class="text-danger fw-bold">*</span> are required. Please fill them in to save the pie.
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Pie.PieId" />
+
+            <div class="mb-3">
+                <label asp-for="Pie.Name" class="form-label"></label><span class="text-danger fw-bold"> *</span>
+                <input asp-for="Pie.Name" class="form-control" required />
+                <span asp-validation-for="Pie.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Pie.ShortDescription" class="form-label"></label>
+                <input asp-for="Pie.ShortDescription" class="form-control" />
+                <span asp-validation-for="Pie.ShortDescription" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Pie.LongDescription" class="form-label"></label>
+                <textarea asp-for="Pie.LongDescription" rows="4" class="form-control"></textarea>
+                <span asp-validation-for="Pie.LongDescription" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Pie.AllergyInformation" class="form-label"></label>
+                <input asp-for="Pie.AllergyInformation" class="form-control" />
+                <span asp-validation-for="Pie.AllergyInformation" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Pie.Price" class="form-label"></label><span class="text-danger fw-bold"> *</span>
+                <input asp-for="Pie.Price" class="form-control" required />
+                <span asp-validation-for="Pie.Price" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Pie.ImageUrl" class="form-label"></label>
+                <input asp-for="Pie.ImageUrl" class="form-control" />
+                <span asp-validation-for="Pie.ImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Pie.ImageThumbnailUrl" class="form-label"></label>
+                <input asp-for="Pie.ImageThumbnailUrl" class="form-control" />
+                <span asp-validation-for="Pie.ImageThumbnailUrl" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Pie.CategoryId" class="form-label"></label><span class="text-danger fw-bold"> *</span>
+                <select asp-for="Pie.CategoryId" asp-items="Model.CategoryOptions" class="form-select" required></select>
+                <span asp-validation-for="Pie.CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="form-check form-switch mb-2">
+                <input class="form-check-input" asp-for="Pie.IsPieOfTheWeek" />
+                <label class="form-check-label" asp-for="Pie.IsPieOfTheWeek"></label>
+            </div>
+
+            <div class="form-check form-switch mb-4">
+                <input class="form-check-input" asp-for="Pie.InStock" />
+                <label class="form-check-label" asp-for="Pie.InStock"></label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save pie</button>
+            <a asp-action="List" asp-route-category="@Model.ReturnCategory" class="btn btn-secondary ms-2">Back to list</a>
+        </form>
+    </div>
+</div>

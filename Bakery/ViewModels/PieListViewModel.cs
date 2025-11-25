@@ -6,11 +6,13 @@ namespace Bakery.ViewModels
     {
         public IEnumerable<Pie> Pies { get; }
         public string? CurrentCategory { get; }
+        public string? CategoryFilter { get; }
 
-        public PieListViewModel(IEnumerable<Pie> pies, string? currentCategory)
+        public PieListViewModel(IEnumerable<Pie> pies, string? currentCategory, string? categoryFilter)
         {
             Pies = pies;
             CurrentCategory = currentCategory;
+            CategoryFilter = categoryFilter;
         }
     }
 }
