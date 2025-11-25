@@ -34,6 +34,7 @@ namespace Bakery.Models
 
         public Pie AddPie(Pie pie)
         {
+            pie.Category = _bakeryDbContext.Categories.FirstOrDefault(c => c.CategoryId == pie.CategoryId);
             _bakeryDbContext.Pies.Add(pie);
             _bakeryDbContext.SaveChanges();
             _bakeryDbContext.Entry(pie).Reference(p => p.Category).Load();
@@ -49,6 +50,7 @@ namespace Bakery.Models
                 return false;
             }
 
+            pie.Category = _bakeryDbContext.Categories.FirstOrDefault(c => c.CategoryId == pie.CategoryId);
             _bakeryDbContext.Pies.Update(pie);
             _bakeryDbContext.SaveChanges();
             return true;

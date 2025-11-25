@@ -6,12 +6,15 @@
 <div class="row">
     <div class="col-md-8">
         <form asp-action="@formAction" method="post">
+            <div class="alert alert-info" role="alert">
+                Fields marked with <span class="text-danger fw-bold">*</span> are required. Please fill them in to save the pie.
+            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Pie.PieId" />
 
             <div class="mb-3">
-                <label asp-for="Pie.Name" class="form-label"></label>
-                <input asp-for="Pie.Name" class="form-control" />
+                <label asp-for="Pie.Name" class="form-label"></label><span class="text-danger fw-bold"> *</span>
+                <input asp-for="Pie.Name" class="form-control" required />
                 <span asp-validation-for="Pie.Name" class="text-danger"></span>
             </div>
 
@@ -34,8 +37,8 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="Pie.Price" class="form-label"></label>
-                <input asp-for="Pie.Price" class="form-control" />
+                <label asp-for="Pie.Price" class="form-label"></label><span class="text-danger fw-bold"> *</span>
+                <input asp-for="Pie.Price" class="form-control" required />
                 <span asp-validation-for="Pie.Price" class="text-danger"></span>
             </div>
 
@@ -52,8 +55,8 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="Pie.CategoryId" class="form-label"></label>
-                <select asp-for="Pie.CategoryId" asp-items="Model.CategoryOptions" class="form-select"></select>
+                <label asp-for="Pie.CategoryId" class="form-label"></label><span class="text-danger fw-bold"> *</span>
+                <select asp-for="Pie.CategoryId" asp-items="Model.CategoryOptions" class="form-select" required></select>
                 <span asp-validation-for="Pie.CategoryId" class="text-danger"></span>
             </div>
 

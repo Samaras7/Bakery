@@ -1,10 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="260" height="80" viewBox="0 0 260 80" role="img" aria-labelledby="title desc">
   <title id="title">Bakery logo</title>
-  <desc id="desc">Stylized rolling pin with a heart and the word Bakery</desc>
+  <desc id="desc">Stylized rolling pin with the word Bakery</desc>
   <rect x="5" y="28" width="250" height="24" rx="12" fill="#f9d7a4" stroke="#b6782a" stroke-width="3" />
   <rect x="15" y="22" width="20" height="36" rx="6" fill="#f2c07c" stroke="#b6782a" stroke-width="3" />
   <rect x="225" y="22" width="20" height="36" rx="6" fill="#f2c07c" stroke="#b6782a" stroke-width="3" />
-  <text x="130" y="50" text-anchor="middle" font-family="'Work Sans', 'Segoe UI', sans-serif" font-size="28" fill="#6b3b1a" font-weight="700">Bakery</text>
-  <path d="M120 44c0-6 4.5-10.5 10-10.5s10 4.5 10 10.5c0 6-4.5 10.5-10 10.5s-10-4.5-10-10.5z" fill="#f08cb0" stroke="#b62c54" stroke-width="3" />
-  <path d="M130 41c1.5-2 4-3 6-1.5 2 1.5 2 4.5 0 6.5l-6 6-6-6c-2-2-2-5 0-6.5 2-1.5 4.5-.5 6 1.5z" fill="#ffffff" />
+  <text x="130" y="52" text-anchor="middle" font-family="'Work Sans', 'Segoe UI', sans-serif" font-size="30" fill="#6b3b1a" font-weight="800">Bakery</text>
 </svg>
