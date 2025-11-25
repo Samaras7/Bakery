@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" role="img" aria-labelledby="title desc">
+  <title id="title">Bakery mark</title>
+  <desc id="desc">Circular badge with loaf of bread and wheat</desc>
+  <circle cx="100" cy="100" r="94" fill="#fff7ec" stroke="#d29b53" stroke-width="6" />
+  <path d="M50 120c0-22 20-40 50-40s50 18 50 40-20 32-50 32-50-10-50-32z" fill="#f2c07c" stroke="#b6782a" stroke-width="4" />
+  <path d="M70 120c0-12 12-22 30-22s30 10 30 22-12 18-30 18-30-6-30-18z" fill="#f6d9a6" />
+  <path d="M88 104c-2 6-2 14 0 20m12-24c-2 6-2 14 0 20m12-24c-2 6-2 14 0 20" stroke="#b6782a" stroke-width="4" stroke-linecap="round" />
+  <g stroke="#d29b53" stroke-width="4" stroke-linecap="round">
+    <path d="M46 78c10 6 14 12 14 22M38 90c10 6 14 12 14 22" />
+    <path d="M154 78c-10 6-14 12-14 22m22-10c-10 6-14 12-14 22" />
+  </g>
+</svg>

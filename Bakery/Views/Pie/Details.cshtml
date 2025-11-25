@@ -16,8 +16,13 @@
                    asp-controller="ShoppingCart"
                    asp-action="AddToShoppingCart"
                    asp-route-pieId="@Model.PieId"> + Add to cart</a>
-               
+
             </p>
+        </div>
+        <div class="mt-3">
+            <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.PieId">Edit</a>
+            <a class="btn btn-outline-danger ms-2" asp-action="Delete" asp-route-id="@Model.PieId">Delete</a>
+            <a class="btn btn-link ms-2" asp-action="List">Back to list</a>
         </div>
     </div>
 </div>
