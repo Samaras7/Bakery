@@ -182,5 +182,39 @@ namespace Bakery.Controllers
                 ModelState[key].Errors.Clear();
             }
         }
+
+        private PieFormViewModel BuildPieFormViewModel(Pie pie)
+        {
+            var categoryOptions = _categoryRepository.AllCategories
+                .Select(c => new SelectListItem
+                {
+                    Text = c.CategoryName,
+                    Value = c.CategoryId.ToString(),
+                    Selected = c.CategoryId == pie.CategoryId
+                });
+
+            return new PieFormViewModel
+            {
+                Pie = pie,
+                CategoryOptions = categoryOptions
+            };
+        }
+
+        private void ClearNonRequiredValidationErrors()
+        {
+            var requiredKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "Pie.Name",
+                "Pie.Price",
+                "Pie.CategoryId"
+            };
+
+            var keysToClear = ModelState.Keys.Where(k => !requiredKeys.Contains(k)).ToList();
+
+            foreach (var key in keysToClear)
+            {
+                ModelState[key].Errors.Clear();
+            }
+        }
     }
 }
