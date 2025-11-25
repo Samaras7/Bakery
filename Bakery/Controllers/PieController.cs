@@ -25,7 +25,7 @@ namespace Bakery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind(Prefix = "Pie")] Pie pie)
+        public IActionResult Create(Pie pie)
         {
             if (!ModelState.IsValid)
             {
@@ -34,7 +34,7 @@ namespace Bakery.Controllers
             }
 
             var createdPie = _pieRepository.AddPie(pie);
-            return RedirectToAction(nameof(List), new { category = createdPie.Category?.CategoryName });
+            return RedirectToAction(nameof(Details), new { id = createdPie.PieId });
         }
 
         public IActionResult Details(int id)
@@ -60,7 +60,7 @@ namespace Bakery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind(Prefix = "Pie")] Pie pie)
+        public IActionResult Edit(int id, Pie pie)
         {
             if (id != pie.PieId)
             {
@@ -80,8 +80,7 @@ namespace Bakery.Controllers
                 return NotFound();
             }
 
-            var updatedPie = _pieRepository.GetPieById(pie.PieId);
-            return RedirectToAction(nameof(List), new { category = updatedPie?.Category?.CategoryName });
+            return RedirectToAction(nameof(Details), new { id = pie.PieId });
         }
 
         public IActionResult Delete(int id)
