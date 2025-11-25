@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="80" viewBox="0 0 260 80" role="img" aria-labelledby="title desc">
+  <title id="title">Bakery logo</title>
+  <desc id="desc">Stylized rolling pin with the word Bakery</desc>
+  <rect x="5" y="28" width="250" height="24" rx="12" fill="#f9d7a4" stroke="#b6782a" stroke-width="3" />
+  <rect x="15" y="22" width="20" height="36" rx="6" fill="#f2c07c" stroke="#b6782a" stroke-width="3" />
+  <rect x="225" y="22" width="20" height="36" rx="6" fill="#f2c07c" stroke="#b6782a" stroke-width="3" />
+  <text x="130" y="52" text-anchor="middle" font-family="'Work Sans', 'Segoe UI', sans-serif" font-size="30" fill="#6b3b1a" font-weight="800">Bakery</text>
+</svg>
