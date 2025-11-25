@@ -1,6 +1,7 @@
 ﻿using Bakery.Models;
 using Bakery.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Bakery.Controllers
 {
@@ -14,14 +15,27 @@ namespace Bakery.Controllers
             _pieRepository = pieRepository;
             _categoryRepository = categoryRepository;
         }
-/*        public IActionResult List()
+
+        public IActionResult Create()
         {
-            *//*ViewBag.CurrentCategory = "Cheese cakes";
-            return View(_pieRepository.AllPies);*//*
-            PieListViewModel piesListViewModel = new PieListViewModel
-                (_pieRepository.AllPies, "Cheese cakes");
-            return View(piesListViewModel);
-        }*/
+            var viewModel = BuildPieFormViewModel(new Pie { InStock = true });
+            ViewData["FormAction"] = nameof(Create);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Pie pie)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewData["FormAction"] = nameof(Create);
+                return View(BuildPieFormViewModel(pie));
+            }
+
+            var createdPie = _pieRepository.AddPie(pie);
+            return RedirectToAction(nameof(Details), new { id = createdPie.PieId });
+        }
 
         public IActionResult Details(int id)
         {
@@ -30,6 +44,71 @@ namespace Bakery.Controllers
                 return NotFound();
             return View(pie);
         }
+
+        public IActionResult Edit(int id)
+        {
+            var pie = _pieRepository.GetPieById(id);
+
+            if (pie == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["FormAction"] = nameof(Edit);
+            return View(BuildPieFormViewModel(pie));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Pie pie)
+        {
+            if (id != pie.PieId)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                ViewData["FormAction"] = nameof(Edit);
+                return View(BuildPieFormViewModel(pie));
+            }
+
+            var updated = _pieRepository.UpdatePie(pie);
+
+            if (!updated)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Details), new { id = pie.PieId });
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var pie = _pieRepository.GetPieById(id);
+
+            if (pie == null)
+            {
+                return NotFound();
+            }
+
+            return View(pie);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var deleted = _pieRepository.DeletePie(id);
+
+            if (!deleted)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(List));
+        }
+
         public ViewResult List(string category)
         {
             IEnumerable<Pie> pies;
@@ -48,6 +127,23 @@ namespace Bakery.Controllers
             }
 
             return View(new PieListViewModel(pies, currentCategory));
+        }
+
+        private PieFormViewModel BuildPieFormViewModel(Pie pie)
+        {
+            var categoryOptions = _categoryRepository.AllCategories
+                .Select(c => new SelectListItem
+                {
+                    Text = c.CategoryName,
+                    Value = c.CategoryId.ToString(),
+                    Selected = c.CategoryId == pie.CategoryId
+                });
+
+            return new PieFormViewModel
+            {
+                Pie = pie,
+                CategoryOptions = categoryOptions
+            };
         }
     }
 }
