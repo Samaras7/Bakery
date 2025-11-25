@@ -2,8 +2,6 @@
 using Bakery.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Bakery.Controllers
 {
@@ -27,10 +25,8 @@ namespace Bakery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind(Prefix = "Pie")] Pie pie)
+        public IActionResult Create(Pie pie)
         {
-            ClearNonRequiredValidationErrors();
-
             if (!ModelState.IsValid)
             {
                 ViewData["FormAction"] = nameof(Create);
@@ -38,7 +34,7 @@ namespace Bakery.Controllers
             }
 
             var createdPie = _pieRepository.AddPie(pie);
-            return RedirectToAction(nameof(List), new { category = createdPie.Category?.CategoryName });
+            return RedirectToAction(nameof(Details), new { id = createdPie.PieId });
         }
 
         public IActionResult Details(int id)
@@ -64,14 +60,12 @@ namespace Bakery.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind(Prefix = "Pie")] Pie pie)
+        public IActionResult Edit(int id, Pie pie)
         {
             if (id != pie.PieId)
             {
                 return BadRequest();
             }
-
-            ClearNonRequiredValidationErrors();
 
             if (!ModelState.IsValid)
             {
@@ -86,8 +80,7 @@ namespace Bakery.Controllers
                 return NotFound();
             }
 
-            var updatedPie = _pieRepository.GetPieById(pie.PieId);
-            return RedirectToAction(nameof(List), new { category = updatedPie?.Category?.CategoryName });
+            return RedirectToAction(nameof(Details), new { id = pie.PieId });
         }
 
         public IActionResult Delete(int id)
@@ -151,23 +144,6 @@ namespace Bakery.Controllers
                 Pie = pie,
                 CategoryOptions = categoryOptions
             };
-        }
-
-        private void ClearNonRequiredValidationErrors()
-        {
-            var requiredKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-            {
-                "Pie.Name",
-                "Pie.Price",
-                "Pie.CategoryId"
-            };
-
-            var keysToClear = ModelState.Keys.Where(k => !requiredKeys.Contains(k)).ToList();
-
-            foreach (var key in keysToClear)
-            {
-                ModelState[key].Errors.Clear();
-            }
         }
     }
 }
