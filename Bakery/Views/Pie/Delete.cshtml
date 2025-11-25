@@ -1,0 +1,28 @@
+﻿@model Pie
+
+@{
+    ViewData["Title"] = "Delete Pie";
+}
+
+<h1>Delete pie</h1>
+
+<div class="alert alert-warning" role="alert">
+    <p class="mb-0">Are you sure you want to delete <strong>@Model.Name</strong>?</p>
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Category</dt>
+    <dd class="col-sm-9">@Model.Category.CategoryName</dd>
+
+    <dt class="col-sm-3">Price</dt>
+    <dd class="col-sm-9">@Model.Price.ToString("c")</dd>
+
+    <dt class="col-sm-3">In stock</dt>
+    <dd class="col-sm-9">@(Model.InStock ? "Yes" : "No")</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="PieId" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a asp-action="Details" asp-route-id="@Model.PieId" class="btn btn-secondary ms-2">Cancel</a>
+</form>
