@@ -16,7 +16,6 @@ namespace Bakery.Models
 
         public string? AllergyInformation { get; set; }
 
-        [Required]
         [Range(0, 1000)]
         public decimal Price { get; set; }
 

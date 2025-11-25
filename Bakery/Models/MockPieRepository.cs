@@ -81,7 +81,6 @@ namespace Bakery.Models
             var nextId = _pies.Count == 0 ? 1 : _pies.Max(p => p.PieId) + 1;
             pie.PieId = nextId;
             pie.Category ??= _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryId == pie.CategoryId);
-            pie.CategoryId = pie.Category?.CategoryId ?? pie.CategoryId;
             _pies.Add(pie);
             return pie;
         }
@@ -103,7 +102,6 @@ namespace Bakery.Models
             existing.IsPieOfTheWeek = pie.IsPieOfTheWeek;
             existing.InStock = pie.InStock;
             existing.Category = pie.Category ?? _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryId == pie.CategoryId);
-            existing.CategoryId = existing.Category?.CategoryId ?? pie.CategoryId;
 
             return true;
         }
