@@ -6,6 +6,7 @@
 <div class="row">
     <div class="col-md-8">
         <form asp-action="@formAction" method="post">
+            <input type="hidden" name="returnCategory" value="@Model.ReturnCategory" />
             <div class="alert alert-info" role="alert">
                 Fields marked with <span class="text-danger fw-bold">*</span> are required. Please fill them in to save the pie.
             </div>
@@ -71,7 +72,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Save pie</button>
-            <a asp-action="List" class="btn btn-secondary ms-2">Back to list</a>
+            <a asp-action="List" asp-route-category="@Model.ReturnCategory" class="btn btn-secondary ms-2">Back to list</a>
         </form>
     </div>
 </div>

@@ -18,27 +18,39 @@ namespace Bakery.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        public IActionResult Create()
+        public IActionResult Create(string? category)
         {
-            var viewModel = BuildPieFormViewModel(new Pie { InStock = true });
+            var pie = new Pie { InStock = true };
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                var matchingCategory = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == category);
+                if (matchingCategory != null)
+                {
+                    pie.CategoryId = matchingCategory.CategoryId;
+                }
+            }
+
+            var viewModel = BuildPieFormViewModel(pie, category);
             ViewData["FormAction"] = nameof(Create);
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind(Prefix = "Pie")] Pie pie)
+        public IActionResult Create([Bind(Prefix = "Pie")] Pie pie, string? returnCategory)
         {
             ClearNonRequiredValidationErrors();
 
             if (!ModelState.IsValid)
             {
                 ViewData["FormAction"] = nameof(Create);
-                return View(BuildPieFormViewModel(pie));
+                return View(BuildPieFormViewModel(pie, returnCategory));
             }
 
             var createdPie = _pieRepository.AddPie(pie);
-            return RedirectToAction(nameof(List), new { category = createdPie.Category?.CategoryName });
+            var destinationCategory = returnCategory ?? createdPie.Category?.CategoryName;
+            return RedirectToAction(nameof(List), new { category = destinationCategory });
         }
 
         public IActionResult Details(int id)
@@ -133,7 +145,42 @@ namespace Bakery.Controllers
                 currentCategory = _categoryRepository.AllCategories.FirstOrDefault(c => c.CategoryName == category)?.CategoryName;
             }
 
-            return View(new PieListViewModel(pies, currentCategory));
+            return View(new PieListViewModel(pies, currentCategory, category));
+        }
+
+        private PieFormViewModel BuildPieFormViewModel(Pie pie, string? returnCategory = null)
+        {
+            var categoryOptions = _categoryRepository.AllCategories
+                .Select(c => new SelectListItem
+                {
+                    Text = c.CategoryName,
+                    Value = c.CategoryId.ToString(),
+                    Selected = c.CategoryId == pie.CategoryId
+                });
+
+            return new PieFormViewModel
+            {
+                Pie = pie,
+                CategoryOptions = categoryOptions,
+                ReturnCategory = returnCategory
+            };
+        }
+
+        private void ClearNonRequiredValidationErrors()
+        {
+            var requiredKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "Pie.Name",
+                "Pie.Price",
+                "Pie.CategoryId"
+            };
+
+            var keysToClear = ModelState.Keys.Where(k => !requiredKeys.Contains(k)).ToList();
+
+            foreach (var key in keysToClear)
+            {
+                ModelState[key].Errors.Clear();
+            }
         }
 
         private PieFormViewModel BuildPieFormViewModel(Pie pie)
